@@ -52,11 +52,28 @@ export type Response = z.infer<typeof ResponseSchema>;
 
 export type ExtendedCharacterType = z.infer<typeof ExtendedCharacterSchema>;
 
-export const charactersAction = async ({ page }: { page: number }) => {
+export const charactersAction = async ({
+  page,
+  filters,
+}: {
+  page: number;
+  filters?: { [key: string]: string };
+}) => {
   try {
-    const response = await fetch(
-      `https://dragonball-api.com/api/characters?page=${page}`
-    );
+    let url = `https://dragonball-api.com/api/characters?page=${page}`;
+
+    if (filters) {
+      const queryString = Object.entries(filters)
+        .map(
+          ([key, value]) =>
+            `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        )
+        .join("&");
+
+      url += `&${queryString}`;
+    }
+    console.log("filters", url);
+    const response = await fetch(url);
     const data = await response.json();
     const validatedData = ResponseSchema.parse(data);
 

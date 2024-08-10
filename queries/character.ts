@@ -1,39 +1,12 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
-import { ExtendedCharacterType } from "@/actions";
 import { QUERY } from "@/query-constants";
 import {
-  CharactersResponseType,
-  ExtendedResponseType,
-} from "@/schemas/character";
-
-const resolvePromisesSeq = async (
-  promises: Promise<ExtendedCharacterType>[]
-): Promise<ExtendedCharacterType[]> => {
-  const result = [];
-
-  for (const promise of promises) {
-    result.push(await promise);
-  }
-
-  return result;
-};
-
-const fetchCharacters = async (
-  page: number
-): Promise<CharactersResponseType> => {
-  const response = await fetch(new Request(`/api/characters/${page}`));
-  const data: CharactersResponseType = await response.json();
-
-  return data;
-};
-
-const fetchCharacter = async (id: number): Promise<ExtendedResponseType> => {
-  const response = await fetch(new Request(`/api/character/${id}`));
-  const data: ExtendedResponseType = await response.json();
-
-  return data;
-};
+  fetchCharacter,
+  fetchCharacters,
+  resolvePromisesSeq,
+} from "@/utils/api";
+import { ExtendedCharacterType } from "@/schemas/character";
 
 export const getCharacters = ({
   page,
@@ -64,6 +37,7 @@ export const getCharacters = ({
       const responseData = await resolvePromisesSeq(
         responses as Promise<ExtendedCharacterType>[]
       );
+      console.log("responseData", responseData);
 
       for (const character of responseData) {
         queryClient?.setQueryData(

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 
-import { CharacterType } from "@/actions";
+import { CharacterType } from "@/schemas/character";
 
 export const Character = ({ character }: { character: CharacterType }) => {
   return (

@@ -12,7 +12,7 @@ const CharacterSchema = z.object({
   affiliation: z.string(),
 });
 
-const ExtendedCharacterSchema = CharacterSchema.extend({
+export const ExtendedCharacterSchema = CharacterSchema.extend({
   originPlanet: z.object({
     id: z.number(),
     name: z.string(),

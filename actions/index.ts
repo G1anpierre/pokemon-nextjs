@@ -1,56 +1,6 @@
 "use server";
-import { z } from "zod";
 
-const CharacterSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  ki: z.string(),
-  maxKi: z.string(),
-  race: z.string(),
-  image: z.string(),
-  gender: z.string(),
-  description: z.string(),
-  affiliation: z.string(),
-});
-
-const ExtendedCharacterSchema = CharacterSchema.extend({
-  originPlanet: z.object({
-    id: z.number(),
-    name: z.string(),
-    isDestroyed: z.boolean(),
-    description: z.string(),
-    image: z.string(),
-  }),
-  transformations: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-      image: z.string(),
-      ki: z.string(),
-    })
-  ),
-});
-
-const MetaSchema = z.object({
-  totalItems: z.number(),
-  itemCount: z.number(),
-  itemsPerPage: z.number(),
-  totalPages: z.number(),
-  currentPage: z.number(),
-});
-
-const CharactersSchema = z.array(CharacterSchema);
-
-const ResponseSchema = z.object({
-  items: CharactersSchema,
-  meta: MetaSchema,
-});
-
-export type CharacterType = z.infer<typeof CharacterSchema>;
-export type Characters = z.infer<typeof CharactersSchema>;
-export type Response = z.infer<typeof ResponseSchema>;
-
-export type ExtendedCharacterType = z.infer<typeof ExtendedCharacterSchema>;
+import { ExtendedCharacterSchema, ResponseSchema } from "@/schemas/character";
 
 export const charactersAction = async ({
   page,

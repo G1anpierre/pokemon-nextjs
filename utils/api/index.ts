@@ -7,7 +7,7 @@ import {
 export const fetchCharacters = async (
   page: number
 ): Promise<CharactersResponseType> => {
-  const response = await fetch(new Request(`/api/characters/${page}`));
+  const response = await fetch(`/api/characters/${page}`);
   const data: CharactersResponseType = await response.json();
 
   return data;
@@ -16,7 +16,7 @@ export const fetchCharacters = async (
 export const fetchCharacter = async (
   id: number
 ): Promise<ExtendedResponseType> => {
-  const response = await fetch(new Request(`/api/character/${id}`));
+  const response = await fetch(`/api/character/${id}`);
   const data: ExtendedResponseType = await response.json();
 
   return data;

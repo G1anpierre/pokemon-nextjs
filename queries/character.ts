@@ -26,9 +26,7 @@ export const getCharacters = ({
 
       // Pre-Fetching each character to get more details and setting them in the cache
       const responses = data.data?.items.map(async (character) => {
-        const response = await fetch(
-          new Request(`/api/character/${character.id}`)
-        );
+        const response = await fetch(`/api/character/${character.id}`);
         const data = await response.json();
 
         return data.data;
@@ -37,7 +35,6 @@ export const getCharacters = ({
       const responseData = await resolvePromisesSeq(
         responses as Promise<ExtendedCharacterType>[]
       );
-      console.log("responseData", responseData);
 
       for (const character of responseData) {
         queryClient?.setQueryData(

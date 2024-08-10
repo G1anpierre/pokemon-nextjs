@@ -72,7 +72,6 @@ export const charactersAction = async ({
 
       url += `&${queryString}`;
     }
-    console.log("filters", url);
     const response = await fetch(url);
     const data = await response.json();
     const validatedData = ResponseSchema.parse(data);

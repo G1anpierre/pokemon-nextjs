@@ -1,12 +1,12 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 
 import { QUERY } from "@/query-constants";
-import {
-  fetchCharacter,
-  fetchCharacters,
-  resolvePromisesSeq,
-} from "@/utils/api";
+import { fetchCharacter, resolvePromisesSeq } from "@/utils/api";
 import { ExtendedCharacterType } from "@/schemas/character";
+import { charactersAction } from "@/actions";
+
+//* To Prefetch the characters and their details, need to use a server-action or to fetch directly from the API
+//* The ROUTE API call is not available in the server prefetched data.
 
 export const getCharacters = ({
   page,
@@ -18,7 +18,7 @@ export const getCharacters = ({
   return {
     queryKey: [QUERY.characters, { page }],
     queryFn: async () => {
-      const data = await fetchCharacters(page);
+      const data = await charactersAction({ page });
 
       if (!data.success) {
         throw new Error(data.message);
@@ -26,10 +26,12 @@ export const getCharacters = ({
 
       // Pre-Fetching each character to get more details and setting them in the cache
       const responses = data.data?.items.map(async (character) => {
-        const response = await fetch(`/api/character/${character.id}`);
+        const response = await fetch(
+          `https://dragonball-api.com/api/characters/${character.id}`
+        );
         const data = await response.json();
 
-        return data.data;
+        return data;
       });
 
       const responseData = await resolvePromisesSeq(

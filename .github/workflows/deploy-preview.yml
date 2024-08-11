@@ -11,6 +11,7 @@ on:
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.base_ref == 'develop'
 
     steps:
       - name: Checkout repository

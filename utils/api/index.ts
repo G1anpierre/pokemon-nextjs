@@ -2,7 +2,8 @@ import {
   CharactersResponseType,
   ExtendedCharacterType,
   ExtendedResponseType,
-} from "@/schemas/character";
+} from "@/schemas";
+import { PlanetsResponseType } from "@/schemas";
 
 export const fetchCharacters = async (
   page: number
@@ -20,6 +21,14 @@ export const fetchCharacter = async (
   const data: ExtendedResponseType = await response.json();
 
   return data;
+};
+
+export const fetchPlanets = async (
+  page: number
+): Promise<PlanetsResponseType> => {
+  const response = await fetch(`/api/planets/${page}`);
+  if (!response.ok) throw new Error("Failed to fetch planets");
+  return response.json();
 };
 
 export const resolvePromisesSeq = async (

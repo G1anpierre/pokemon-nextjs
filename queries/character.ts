@@ -2,7 +2,7 @@ import { QueryClient, useQuery } from "@tanstack/react-query";
 
 import { QUERY } from "@/query-constants";
 import { fetchCharacter, resolvePromisesSeq } from "@/utils/api";
-import { ExtendedCharacterType } from "@/schemas/character";
+import { ExtendedCharacterType } from "@/schemas";
 import { charactersAction } from "@/actions";
 
 //* To Prefetch the characters and their details, need to use a server-action or to fetch directly from the API

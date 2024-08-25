@@ -1,7 +1,12 @@
+import { Planets } from "@/components/planets";
 import React from "react";
 
 const PlanetsPage = () => {
-  return <div>PlanetsPage in Construction</div>;
+  return (
+    <div>
+      <Planets />
+    </div>
+  );
 };
 
 export default PlanetsPage;

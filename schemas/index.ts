@@ -12,6 +12,17 @@ const CharacterSchema = z.object({
   affiliation: z.string(),
 });
 
+const PlanetSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  isDestroyed: z.boolean(),
+  description: z.string(),
+  image: z.string(),
+  deletedAt: z.null(),
+});
+
+export type PlanetType = z.infer<typeof PlanetSchema>;
+
 export const ExtendedCharacterSchema = CharacterSchema.extend({
   originPlanet: z.object({
     id: z.number(),
@@ -44,6 +55,13 @@ export const ResponseSchema = z.object({
   items: CharactersSchema,
   meta: MetaSchema,
 });
+
+export const PlanetsResponseSchema = z.object({
+  items: z.array(PlanetSchema),
+  meta: MetaSchema,
+});
+
+export type PlanetsResponseType = z.infer<typeof PlanetsResponseSchema>;
 
 export const CharactersResponseSchema = z.object({
   data: ResponseSchema,

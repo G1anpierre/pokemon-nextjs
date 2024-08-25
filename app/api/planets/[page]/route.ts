@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { ResponseSchema } from "@/schemas";
+import { PlanetsResponseSchema } from "@/schemas";
 
 export const GET = async (
   req: Request,
@@ -10,18 +10,18 @@ export const GET = async (
 
   try {
     const response = await fetch(
-      `https://dragonball-api.com/api/characters?page=${page}`
+      `https://dragonball-api.com/api/planets?page=${page}`
     );
 
     if (!response.ok) {
-      NextResponse.json({
+      return NextResponse.json({
         message: "An unknown error occurred",
         success: false,
       });
     }
 
     const data = await response.json();
-    const validatedData = ResponseSchema.parse(data);
+    const validatedData = PlanetsResponseSchema.parse(data);
 
     return NextResponse.json({ data: validatedData, success: true });
   } catch (error: unknown) {
